@@ -1,6 +1,8 @@
 <?php
 
+use App\Events\Message;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +21,10 @@ Route::get('/', function () {
 
 Route::get('/chat', function () {
     return view('chat');
+});
+Route::post('/send_message', function (Request $request)
+{
+    event(new Message($request->input('usernaame'),$request->input('message')));
+
+    return ['success'=>true];
 });
